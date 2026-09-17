@@ -132,6 +132,4 @@ System.out.println(content);
 - `searchByExtension` walks the directory tree recursively (including
   subfolders).
 
-## License
 
-Free to use and modify for learning or personal/commercial projects.
