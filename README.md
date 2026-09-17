@@ -67,7 +67,7 @@ java -cp bin Main
 
 You'll see an interactive menu like this:
 
-=============================================
+
    JAVA FILE HANDLING PROJECT - DEMO CONSOLE APP
 =================================================
 
