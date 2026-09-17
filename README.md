@@ -67,7 +67,7 @@ java -cp bin Main
 
 You'll see an interactive menu like this:
 
-=================================================
+=============================================
    JAVA FILE HANDLING PROJECT - DEMO CONSOLE APP
 =================================================
 
@@ -108,20 +108,20 @@ Enter file path to read: data/sample.txt
 ----- File Content -----
 Hello, File Handling in Java!
 -------------------------
-```
+
 
 ## Using `FileOperations` in Your Own Code
 
 Since all methods are `public static`, you can call them directly without
 creating an instance:
 
-```java
+java
 FileOperations.createFile("output/log.txt");
 FileOperations.writeFile("output/log.txt", "First entry");
 FileOperations.appendToFile("output/log.txt", "Second entry");
 String content = FileOperations.readFile("output/log.txt");
 System.out.println(content);
-```
+
 
 ## Notes
 
