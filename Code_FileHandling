@@ -1,0 +1,164 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Main
+ * ----
+ * A simple command-line menu that demonstrates the file-handling
+ * capabilities implemented in FileOperations.java.
+ */
+public class Main {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        boolean running = true;
+
+        System.out.println("=================================================");
+        System.out.println("   JAVA FILE HANDLING PROJECT - DEMO CONSOLE APP");
+        System.out.println("=================================================");
+
+        while (running) {
+            printMenu();
+            String choice = scanner.nextLine().trim();
+
+            try {
+                switch (choice) {
+                    case "1": createFileFlow(); break;
+                    case "2": writeFileFlow(); break;
+                    case "3": appendFileFlow(); break;
+                    case "4": readFileFlow(); break;
+                    case "5": deleteFileFlow(); break;
+                    case "6": copyFileFlow(); break;
+                    case "7": moveFileFlow(); break;
+                    case "8": listFilesFlow(); break;
+                    case "9": searchFlow(); break;
+                    case "10": fileInfoFlow(); break;
+                    case "11": createDirectoryFlow(); break;
+                    case "12": countLinesFlow(); break;
+                    case "0":
+                        running = false;
+                        System.out.println("Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+
+    private static void printMenu() {
+        System.out.println("\nChoose an operation:");
+        System.out.println(" 1. Create a new file");
+        System.out.println(" 2. Write to a file (overwrite)");
+        System.out.println(" 3. Append to a file");
+        System.out.println(" 4. Read a file");
+        System.out.println(" 5. Delete a file");
+        System.out.println(" 6. Copy a file");
+        System.out.println(" 7. Move / rename a file");
+        System.out.println(" 8. List files in a directory");
+        System.out.println(" 9. Search files by extension");
+        System.out.println("10. Show file info (size, dates, etc.)");
+        System.out.println("11. Create a directory");
+        System.out.println("12. Count lines in a file");
+        System.out.println(" 0. Exit");
+        System.out.print("> ");
+    }
+
+    private static String prompt(String label) {
+        System.out.print(label + ": ");
+        return scanner.nextLine().trim();
+    }
+
+    private static void createFileFlow() throws IOException {
+        String path = prompt("Enter file path to create");
+        boolean created = FileOperations.createFile(path);
+        System.out.println(created ? "File created: " + path : "File already exists or could not be created.");
+    }
+
+    private static void writeFileFlow() throws IOException {
+        String path = prompt("Enter file path to write to");
+        String content = prompt("Enter content");
+        FileOperations.writeFile(path, content);
+        System.out.println("Content written to " + path);
+    }
+
+    private static void appendFileFlow() throws IOException {
+        String path = prompt("Enter file path to append to");
+        String content = prompt("Enter content to append");
+        FileOperations.appendToFile(path, content);
+        System.out.println("Content appended to " + path);
+    }
+
+    private static void readFileFlow() throws IOException {
+        String path = prompt("Enter file path to read");
+        System.out.println("----- File Content -----");
+        System.out.println(FileOperations.readFile(path));
+        System.out.println("-------------------------");
+    }
+
+    private static void deleteFileFlow() {
+        String path = prompt("Enter file path to delete");
+        boolean deleted = FileOperations.deleteFile(path);
+        System.out.println(deleted ? "Deleted: " + path : "File not found or could not be deleted.");
+    }
+
+    private static void copyFileFlow() throws IOException {
+        String source = prompt("Enter source file path");
+        String dest = prompt("Enter destination file path");
+        FileOperations.copyFile(source, dest);
+        System.out.println("Copied " + source + " -> " + dest);
+    }
+
+    private static void moveFileFlow() throws IOException {
+        String source = prompt("Enter source file path");
+        String dest = prompt("Enter destination file path");
+        FileOperations.moveFile(source, dest);
+        System.out.println("Moved " + source + " -> " + dest);
+    }
+
+    private static void listFilesFlow() throws IOException {
+        String dir = prompt("Enter directory path");
+        List<String> files = FileOperations.listFiles(dir);
+        if (files.isEmpty()) {
+            System.out.println("No files found.");
+        } else {
+            files.forEach(System.out::println);
+        }
+    }
+
+    private static void searchFlow() throws IOException {
+        String dir = prompt("Enter directory path to search");
+        String ext = prompt("Enter extension (e.g. .txt)");
+        List<String> matches = FileOperations.searchByExtension(dir, ext);
+        if (matches.isEmpty()) {
+            System.out.println("No matching files found.");
+        } else {
+            matches.forEach(System.out::println);
+        }
+    }
+
+    private static void fileInfoFlow() throws IOException {
+        String path = prompt("Enter file path");
+        System.out.println(FileOperations.getFileInfo(path));
+    }
+
+    private static void createDirectoryFlow() throws IOException {
+        String path = prompt("Enter directory path to create");
+        boolean created = FileOperations.createDirectory(path);
+        System.out.println(created ? "Directory created: " + path : "Directory already exists or could not be created.");
+    }
+
+    private static void countLinesFlow() throws IOException {
+        String path = prompt("Enter file path");
+        long lines = FileOperations.countLines(path);
+        System.out.println("Line count: " + lines);
+    }
+}
